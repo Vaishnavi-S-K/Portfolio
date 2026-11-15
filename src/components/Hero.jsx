@@ -247,7 +247,10 @@ export default function Hero() {
             playsInline
             preload="metadata"
           >
-            <source src="/videos/myanime3.webm" type="video/webm" />
+            <source
+              src={`${import.meta.env.BASE_URL}videos/myanime3.webm`}
+              type="video/webm"
+            />
             Your browser does not support video.
           </video>
         </div>

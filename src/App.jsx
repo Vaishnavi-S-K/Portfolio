@@ -15,6 +15,8 @@ import Hero from "./components/Hero";
 import SplashCursor from "./components/SplashCursor";
 import "./App.css";
 
+const publicAsset = (path) => `${import.meta.env.BASE_URL}${path}`;
+
 const projects = [
   {
     number: "01",
@@ -28,7 +30,7 @@ const projects = [
       "Developed a centralized platform with a React-based frontend and REST APIs to support transport management workflows. Authentication and role-based access control organize access to different operations.",
     stack:
       "React.js · Node.js · Express.js · MySQL · Prisma · JWT · RBAC · REST APIs",
-    image: "/images/TransitOps Smart Campus Mobility Card.png",
+    image: publicAsset("images/TransitOps Smart Campus Mobility Card.png"),
     architecture:
       "React.js frontend → Node.js + Express.js REST APIs → Prisma ORM → MySQL database.",
     features:
@@ -47,7 +49,7 @@ const projects = [
     solution:
       "Developed a web-based event booking platform that brings event discovery and booking workflows into one place, providing a digital interface for students and event organizers.",
     stack: "MongoDB · Express.js · React.js · Node.js",
-    image: "/images/University Event Booking Platform.png",
+    image: publicAsset("images/University Event Booking Platform.png"),
     architecture:
       "React.js frontend → Node.js + Express.js backend → MongoDB database.",
     features:
@@ -68,7 +70,7 @@ const projects = [
       "Developed a voice-driven pipeline combining speech recognition, natural-language processing and vision-language segmentation. Spoken instructions are transcribed, converted into a text query and used to generate the requested object mask.",
     stack:
       "Python · Whisper · spaCy · CLIPSeg · Vision-Language Models · Computer Vision",
-    image: "/images/Voice-Driven Cat Segmentation.png",
+    image: publicAsset("images/Voice-Driven Cat Segmentation.png"),
     architecture:
       "Voice input → Whisper speech-to-text → spaCy query extraction → CLIPSeg text-guided segmentation → segmentation output.",
     features:
@@ -89,7 +91,7 @@ const projects = [
       "Developed a knowledge graph-based question-answering pipeline using Graph Convolutional Networks to learn entity representations and reason over relationships in a structured graph. The experimental dataset contains 2,533 triples and 509 entities.",
     stack:
       "Python · PyTorch · Graph Convolutional Networks · Knowledge Graphs · NLP · Multilingual QA",
-    image: "/images/Multilingual Knowledge Graph Reasoning.png",
+    image: publicAsset("images/Multilingual Knowledge Graph Reasoning.png"),
     architecture:
       "Multilingual question input → entity and relation representation → knowledge graph construction → three-layer GCN → graph embeddings and reasoning → answer prediction.",
     features:
@@ -424,7 +426,7 @@ function App() {
             title={
               <img
                 className="about-photo"
-                src="/images/me2.jpeg"
+                src={publicAsset("images/me2.jpeg")}
                 alt="Vaishnavi S Kaluti"
               />
             }
