@@ -44,6 +44,7 @@ export default function Hero() {
     let timeline;
     let fallbackTimer;
     let cancelled = false;
+    const isMobile = window.matchMedia("(max-width: 600px)").matches;
 
     const ctx = gsap.context(() => {
       const hello = hero.querySelector(".hello");
@@ -134,12 +135,14 @@ export default function Hero() {
           opacity: 1,
           scale: 1,
           y: 0,
-          duration: 0.2,
-          stagger: (index) =>
-            [
-              0, 0.38, 0.82, 1.3, 1.92, 2.4, 2.88, 3.36, 3.84, 4.32, 4.96, 5.44,
-              6.08, 6.56,
-            ][index],
+          duration: isMobile ? 0.16 : 0.2,
+          stagger: isMobile
+            ? (index) => index * 0.18
+            : (index) =>
+                [
+                  0, 0.38, 0.82, 1.3, 1.92, 2.4, 2.88, 3.36, 3.84, 4.32, 4.96,
+                  5.44, 6.08, 6.56,
+                ][index],
           ease: "back.out(1.5)",
         },
         2.7,
@@ -261,6 +264,11 @@ export default function Hero() {
             playsInline
             preload="metadata"
           >
+            <source
+              media="(max-width: 600px)"
+              src={`${import.meta.env.BASE_URL}videos/myanime2_fixed_mobile.webm`}
+              type="video/webm"
+            />
             <source
               src={`${import.meta.env.BASE_URL}videos/myanime2_fixed.webm`}
               type="video/webm"
