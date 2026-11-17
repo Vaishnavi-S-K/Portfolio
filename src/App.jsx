@@ -187,6 +187,7 @@ function ProjectGallery() {
   const galleryRef = useRef(null);
   const cardRefs = useRef([]);
   const panelRef = useRef(null);
+  const mobileGalleryScroll = useRef(0);
   const positions = [
     { left: "5%", top: "18%", rotation: -8, scale: 1, zIndex: 2 },
     { left: "29%", top: "13%", rotation: 6, scale: 0.92, zIndex: 1 },
@@ -214,6 +215,12 @@ function ProjectGallery() {
   useLayoutEffect(() => {
     const cards = cardRefs.current;
     const panel = panelRef.current;
+    const isMobile = window.matchMedia("(max-width: 720px)").matches;
+    if (isMobile) {
+      gsap.set(cards, { clearProps: "all", opacity: 1 });
+      if (panel) gsap.set(panel, { clearProps: "all" });
+      return;
+    }
     const selected = selectedIndex === null ? null : positions[selectedIndex];
     cards.forEach((card, index) => {
       if (!card) return;
@@ -267,7 +274,24 @@ function ProjectGallery() {
     }
   }, [selectedIndex]);
 
+  const selectProject = (index) => {
+    if (window.matchMedia("(max-width: 720px)").matches) {
+      mobileGalleryScroll.current = window.scrollY;
+    }
+    setSelectedIndex(index);
+  };
+
+  const closeProject = () => {
+    setSelectedIndex(null);
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top: mobileGalleryScroll.current, behavior: "auto" });
+    });
+  };
+
   const handleHover = (index, isHovering) => {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      return;
+    }
     setHoveredIndex(isHovering ? index : null);
     if (selectedIndex !== null || !cardRefs.current[index]) return;
     const base = positions[index];
@@ -292,7 +316,7 @@ function ProjectGallery() {
             ref={(element) => {
               cardRefs.current[index] = element;
             }}
-            onClick={() => setSelectedIndex(index)}
+            onClick={() => selectProject(index)}
             onMouseEnter={() => handleHover(index, true)}
             onMouseLeave={() => handleHover(index, false)}
             style={{
@@ -305,8 +329,15 @@ function ProjectGallery() {
             aria-label={`Open ${project.title} project details`}
           >
             <img src={project.image} alt={`${project.title} project preview`} />
+            <span className="project-gallery-mobile-number">
+              {project.number}
+            </span>
             <span className="project-gallery-label">
               {project.number} · {project.label}
+            </span>
+            <span className="project-gallery-mobile-copy">
+              <strong>{project.title}</strong>
+              <small>{project.label}</small>
             </span>
             <span className="project-gallery-view">VIEW PROJECT ↗</span>
           </button>
@@ -318,15 +349,24 @@ function ProjectGallery() {
             <button
               type="button"
               className="project-back"
-              onClick={() => setSelectedIndex(null)}
+              onClick={closeProject}
             >
               ← BACK TO PROJECTS
             </button>
             <p className="eyebrow">{projects[selectedIndex].label}</p>
             <h3>{projects[selectedIndex].title}</h3>
+            <img
+              className="project-detail-artwork"
+              src={projects[selectedIndex].image}
+              alt={`${projects[selectedIndex].title} project artwork`}
+            />
             <p className="project-detail-intro">
               {projects[selectedIndex].introduction}
             </p>
+            <div className="project-detail-mobile-stack">
+              <strong>Technology stack</strong>
+              <p>{projects[selectedIndex].stack}</p>
+            </div>
             <div className="project-detail-grid">
               <div>
                 <strong>Problem</strong>
@@ -506,7 +546,7 @@ function App() {
             preset="cylinder"
             intro="rise"
             cardWidth={430}
-            aspectRatio={1.35}
+            aspectRatio={1.05}
             gap={28}
             autoplay="drift"
             speed={7}

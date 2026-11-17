@@ -136,7 +136,20 @@
   height: 100%;
   opacity: 0;
   object-fit: contain;
+  display: block;
   object-position: bottom center;
+  }
+
+  .mobile-character {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  width: 100%;
+  }
+
+  .mobile-character.is-playing {
+  opacity: 1;
   display: block;
   border: none;
 
@@ -151,6 +164,10 @@
 
 .walking-video.is-playing {
   opacity: 1;
+}
+
+.mobile-character {
+  display: none;
 }
 
 /* =========================================
@@ -170,11 +187,16 @@
 }
 
 .scroll-indicator {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
   font-size: 11px;
   font-weight: 700;
+  font-family: inherit;
   letter-spacing: 2px;
   color: #555650;
   opacity: 0;
+  padding: 0;
   will-change: transform, opacity;
 }
 

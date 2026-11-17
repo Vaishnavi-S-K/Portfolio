@@ -8,6 +8,33 @@ export default function Hero() {
   const heroRef = useRef(null);
   const videoRef = useRef(null);
 
+  const scrollToExplore = () => {
+    const target = document.querySelector("#about");
+    if (!target) return;
+
+    const start = window.scrollY;
+    const targetY = start + target.getBoundingClientRect().top;
+    const distance = targetY - start;
+    const duration = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? 0
+      : 1500;
+    const startedAt = performance.now();
+
+    if (duration === 0) {
+      window.scrollTo(0, targetY);
+      return;
+    }
+
+    const step = (now) => {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      window.scrollTo(0, start + distance * eased);
+      if (progress < 1) window.requestAnimationFrame(step);
+    };
+
+    window.requestAnimationFrame(step);
+  };
+
   useLayoutEffect(() => {
     const hero = heroRef.current;
     const video = videoRef.current;
@@ -69,11 +96,6 @@ export default function Hero() {
         scale: 0.85,
         y: 20,
         transformOrigin: "left center",
-      });
-
-      gsap.set(scrollText, {
-        opacity: 0,
-        y: 15,
       });
 
       // Main cinematic timeline.
@@ -148,16 +170,8 @@ export default function Hero() {
         10.8,
       );
 
-      // Scroll indicator.
-      timeline.to(
-        scrollText,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-        },
-        12,
-      );
+      // Keep the scroll control available while the hero animation runs.
+      gsap.set(scrollText, { opacity: 1, y: 0 });
     }, hero);
 
     // Start timeline only when video begins playing.
@@ -248,7 +262,7 @@ export default function Hero() {
             preload="metadata"
           >
             <source
-              src={`${import.meta.env.BASE_URL}videos/myanime3.webm`}
+              src={`${import.meta.env.BASE_URL}videos/myanime2_fixed.webm`}
               type="video/webm"
             />
             Your browser does not support video.
@@ -258,9 +272,14 @@ export default function Hero() {
 
       {/* FOOTER */}
       <div className="hero-footer">
-        <span className="scroll-indicator">
+        <button
+          type="button"
+          className="scroll-indicator"
+          onClick={scrollToExplore}
+          aria-label="Scroll to explore the portfolio"
+        >
           SCROLL TO EXPLORE <span>↓</span>
-        </span>
+        </button>
       </div>
     </section>
   );

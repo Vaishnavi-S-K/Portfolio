@@ -318,7 +318,7 @@
 
   @media (max-width: 720px) {
     .circular-carousel {
-      height: 480px;
+      height: 360px;
     }
 
     .circular-carousel__achievement {
