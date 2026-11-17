@@ -290,9 +290,21 @@ em { color: var(--red); font-style: normal; }
   .project-detail-grid { grid-template-columns: 1fr; }
   .project-detail-intro { font-size: 16px; }
   .contact { padding-bottom: 48px; padding-top: 48px; }
-  .contact h2 { font-size: clamp(48px, 15vw, 86px); }
+  .contact h2,
+  .contact h2 em {
+    color: #fff;
+    font-size: clamp(48px, 15vw, 86px);
+    font-weight: 900;
+    line-height: .9;
+    max-width: 100%;
+  }
   .contact-cta { margin-bottom: 30px; }
-  .journey.section-shell { padding-bottom: 28px; padding-top: 32px; }
+  .journey.section-shell {
+    padding-bottom: 28px;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    padding-top: 32px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

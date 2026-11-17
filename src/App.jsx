@@ -407,6 +407,16 @@ function ProjectGallery() {
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
+  const [viewportWidth, setViewportWidth] = useState(() =>
+    typeof window === "undefined" ? 0 : window.innerWidth,
+  );
+
+  useLayoutEffect(() => {
+    const updateViewportWidth = () => setViewportWidth(window.innerWidth);
+    updateViewportWidth();
+    window.addEventListener("resize", updateViewportWidth);
+    return () => window.removeEventListener("resize", updateViewportWidth);
+  }, []);
 
   const closeMenu = () => setMenuOpen(false);
   const copyEmail = async () => {
@@ -545,8 +555,12 @@ function App() {
             items={milestones}
             preset="cylinder"
             intro="rise"
-            cardWidth={430}
-            aspectRatio={1.05}
+            cardWidth={
+              viewportWidth > 0 && viewportWidth <= 720
+                ? Math.min(viewportWidth * 0.82, 340)
+                : 430
+            }
+            aspectRatio={viewportWidth > 0 && viewportWidth <= 720 ? 1.22 : 1.05}
             gap={28}
             autoplay="drift"
             speed={7}

@@ -310,6 +310,29 @@
   }
 }
 
+@media (max-width: 720px) {
+  .circular-carousel {
+    height: 360px;
+  }
+
+  .circular-carousel__achievement {
+    padding: 22px;
+  }
+
+  .circular-carousel__achievement-title {
+    font-size: clamp(32px, 9vw, 40px);
+  }
+
+  .circular-carousel__achievement-organization {
+    font-size: 15px;
+  }
+
+  .circular-carousel__achievement-description {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .circular-carousel__stage,
   .circular-carousel__reel {
