@@ -292,7 +292,7 @@ em { color: var(--red); font-style: normal; }
   .contact { padding-bottom: 48px; padding-top: 48px; }
   .contact h2,
   .contact h2 em {
-    color: #fff;
+    color: var(--ink);
     font-size: clamp(48px, 15vw, 86px);
     font-weight: 900;
     line-height: .9;
